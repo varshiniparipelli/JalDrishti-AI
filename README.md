@@ -1,4 +1,9 @@
+
 # JalDrishti-AI 💧
+
+**Live Demo:** [Click here to use JalDrishti-AI](https://jaldrishti-ai-4.onrender.com)
+
+
 
 **Problem Statement #38 — Improved Source of Drinking Water**
 *AI-powered analytics platform for MIS 78th Round data, built on IBM Cloud Lite services*
