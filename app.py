@@ -1,11 +1,10 @@
-
 """
 JalDrishti-AI — Flask Application Entry Point
-REST API serving the MIS 78th Round water-access analytics dashboard.
-Uses IBM Cloud Lite: Watson ML, COS, Db2, Watson Assistant.
+REST API serving MIS 78th Round water-access analytics dashboard.
 """
 
 import os
+import re
 
 from flask import Flask, jsonify, request, render_template, session
 from flask_cors import CORS
@@ -38,7 +37,6 @@ CORS(app)
 
 app.secret_key = os.getenv("SECRET_KEY", "jaldrishti-dev-key")
 
-
 # ============================================================
 # DATASET CACHE
 # ============================================================
@@ -61,10 +59,7 @@ def get_df() -> pd.DataFrame:
 # ============================================================
 
 def build_chat_context(df):
-    """
-    Build chatbot context using actual MIS 78th Round
-    dataset calculations.
-    """
+    """Build chatbot context using actual MIS 78th Round calculations."""
 
     kpis = compute_kpis(df)
     states = state_analysis(df)
@@ -82,20 +77,16 @@ access analytics project.
 DATA SOURCE:
 MIS 78th Round dataset (2020-2021).
 
-IMPORTANT:
-Use the supplied dataset results for all questions about
-survey statistics and state rankings.
-
 NATIONAL KPI RESULTS:
 {kpis}
 
 STATE ANALYSIS:
 {states}
 
-TOP 10 STATES BY IMPROVED DRINKING-WATER ACCESS:
+TOP 10 STATES:
 {top}
 
-BOTTOM 10 STATES BY IMPROVED DRINKING-WATER ACCESS:
+BOTTOM 10 STATES:
 {bottom}
 
 SECTOR ANALYSIS:
@@ -110,39 +101,21 @@ RURAL-URBAN STATE GAPS:
 SDG PROGRESS:
 {sdg}
 
-IMPORTANT DEFINITIONS AND RULES:
+IMPORTANT RULES:
 
-1. Improved drinking-water access and piped-water access
-   are two different indicators.
-
-2. Improved drinking-water access can include eligible
-   improved sources other than piped household connections.
-
-3. Do not describe improved drinking-water access as
-   tap-water connectivity.
-
-4. For state rankings, use overall (All sector)
-   improved drinking-water access.
-
-5. Do not invent state names, percentages, rankings,
-   survey results, citations or references.
-
-6. Do not use placeholders such as [percentage].
-
-7. If the supplied dataset does not contain the requested
-   information, clearly say that the information is unavailable.
-
-8. The dataset represents the survey period, not real-time
-   current water-access conditions.
-
-9. Explain SDG 6.1 using the supplied progress figures.
-   Clearly distinguish survey values from projections.
-
-10. Answer in clear, simple language in approximately
-    2-4 sentences.
-
-11. Do not claim to have real-time browsing capability.
-
+1. Use supplied dataset results for survey statistics.
+2. Improved drinking-water access and piped-water access
+   are different indicators.
+3. Improved access does not mean tap-water connectivity.
+4. For state rankings, use overall improved access.
+5. Never invent state names, percentages or rankings.
+6. Never use placeholders such as [percentage].
+7. If information is unavailable, say so clearly.
+8. Dataset values represent the survey period, not
+   real-time current conditions.
+9. Clearly distinguish survey estimates from projections.
+10. Answer in clear, simple English.
+11. Do not invent citations or report quotations.
 12. Return plain text, not JSON.
 """
 
@@ -150,7 +123,7 @@ IMPORTANT DEFINITIONS AND RULES:
 
 
 # ============================================================
-# PAGES
+# HOME PAGE
 # ============================================================
 
 @app.route("/")
@@ -164,7 +137,6 @@ def index():
 
 @app.route("/api/kpis")
 def api_kpis():
-
     df = get_df()
     kpis = compute_kpis(df)
 
@@ -180,7 +152,6 @@ def api_kpis():
 
 @app.route("/api/state-analysis")
 def api_state():
-
     df = get_df()
     data = state_analysis(df)
 
@@ -196,7 +167,6 @@ def api_state():
 
 @app.route("/api/sector-analysis")
 def api_sector():
-
     df = get_df()
     data = sector_analysis(df)
 
@@ -212,7 +182,6 @@ def api_sector():
 
 @app.route("/api/water-sources")
 def api_water_sources():
-
     df = get_df()
     data = water_source_distribution(df)
 
@@ -228,7 +197,6 @@ def api_water_sources():
 
 @app.route("/api/state-gap")
 def api_state_gap():
-
     df = get_df()
     data = state_gap_analysis(df)
 
@@ -244,7 +212,6 @@ def api_state_gap():
 
 @app.route("/api/top-states")
 def api_top_states():
-
     df = get_df()
     n = int(request.args.get("n", 10))
 
@@ -256,7 +223,6 @@ def api_top_states():
 
 @app.route("/api/bottom-states")
 def api_bottom_states():
-
     df = get_df()
     n = int(request.args.get("n", 10))
 
@@ -272,7 +238,6 @@ def api_bottom_states():
 
 @app.route("/api/sdg-progress")
 def api_sdg():
-
     df = get_df()
     data = sdg_progress(df)
 
@@ -288,7 +253,6 @@ def api_sdg():
 
 @app.route("/api/train", methods=["POST"])
 def api_train():
-
     df = get_df()
     result = train_model(df)
 
@@ -304,7 +268,6 @@ def api_train():
 
 @app.route("/api/predict", methods=["POST"])
 def api_predict():
-
     body = request.get_json(force=True) or {}
 
     missing = [
@@ -327,7 +290,6 @@ def api_predict():
         })
 
     except FileNotFoundError:
-
         return jsonify({
             "status": "error",
             "message": "Model not trained yet. POST /api/train first."
@@ -340,7 +302,6 @@ def api_predict():
 
 @app.route("/api/watson-predict", methods=["POST"])
 def api_watson_predict():
-
     try:
         from services.watson_ml_service import score_record
 
@@ -353,7 +314,6 @@ def api_watson_predict():
         })
 
     except Exception as exc:
-
         app.logger.exception("Watson ML prediction error")
 
         return jsonify({
@@ -368,7 +328,6 @@ def api_watson_predict():
 
 @app.route("/api/chat/session", methods=["POST"])
 def chat_session():
-
     try:
         from services.assistant_service import create_session
 
@@ -381,7 +340,6 @@ def chat_session():
         })
 
     except Exception as exc:
-
         app.logger.exception("Watson Assistant session error")
 
         return jsonify({
@@ -392,7 +350,6 @@ def chat_session():
 
 @app.route("/api/chat/message", methods=["POST"])
 def chat_message():
-
     try:
         from services.assistant_service import send_message
 
@@ -419,7 +376,6 @@ def chat_message():
         })
 
     except Exception as exc:
-
         app.logger.exception("Watson Assistant message error")
 
         return jsonify({
@@ -434,7 +390,6 @@ def chat_message():
 
 @app.route("/api/cos/upload", methods=["POST"])
 def cos_upload():
-
     try:
         from services.cos_service import (
             ensure_bucket_exists,
@@ -460,7 +415,6 @@ def cos_upload():
         })
 
     except Exception as exc:
-
         app.logger.exception("COS upload error")
 
         return jsonify({
@@ -475,7 +429,6 @@ def cos_upload():
 
 @app.route("/api/watsonx/national-insight", methods=["GET"])
 def watsonx_national():
-
     try:
         from services.watsonx_service import analyse_national
 
@@ -497,7 +450,6 @@ def watsonx_national():
         })
 
     except Exception as exc:
-
         app.logger.exception("Watsonx national insight error")
 
         return jsonify({
@@ -512,7 +464,6 @@ def watsonx_national():
 
 @app.route("/api/watsonx/state-insight", methods=["POST"])
 def watsonx_state():
-
     try:
         from services.watsonx_service import analyse_state
 
@@ -574,7 +525,6 @@ def watsonx_state():
         })
 
     except Exception as exc:
-
         app.logger.exception("Watsonx state insight error")
 
         return jsonify({
@@ -589,7 +539,6 @@ def watsonx_state():
 
 @app.route("/api/watsonx/chat", methods=["POST"])
 def watsonx_chat():
-
     try:
         from services.watsonx_service import chat_response
 
@@ -604,11 +553,104 @@ def watsonx_chat():
 
         df = get_df()
 
-        # Calculate rankings directly from the dataset
         bottom = bottom_states(df, 10)
         top = top_states(df, 10)
 
         q = question.lower()
+
+        # ----------------------------------------------------
+        # NAMED STATE COMPARISON
+        # ----------------------------------------------------
+
+        comparison_intent = any(term in q for term in [
+            "compare",
+            "comparison",
+            " versus ",
+            " vs ",
+            "difference between",
+            "between"
+        ])
+
+        if comparison_intent:
+            all_states = state_analysis(df)
+            matched_states = []
+
+            for state_row in all_states:
+                state_name = str(state_row.get("state", "")).strip()
+
+                if state_name and re.search(
+                    r"\b" + re.escape(state_name.lower()) + r"\b",
+                    q
+                ):
+                    matched_states.append(state_row)
+
+            unique_states = []
+            seen_names = set()
+
+            for state_row in matched_states:
+                name_key = str(state_row.get("state", "")).strip().lower()
+
+                if name_key not in seen_names:
+                    unique_states.append(state_row)
+                    seen_names.add(name_key)
+
+            if len(unique_states) == 2:
+                first, second = unique_states
+
+                first_overall = float(first["improved_all_pct"])
+                second_overall = float(second["improved_all_pct"])
+
+                overall_difference = round(
+                    abs(first_overall - second_overall), 1
+                )
+
+                first_rural = first.get("improved_rural_pct")
+                first_urban = first.get("improved_urban_pct")
+                second_rural = second.get("improved_rural_pct")
+                second_urban = second.get("improved_urban_pct")
+
+                reply = (
+                    "MIS 78th Round state comparison:\n\n"
+                    f"{first['state']}:\n"
+                    f"- Rural improved drinking-water access: "
+                    f"{first_rural}%\n"
+                    f"- Urban improved drinking-water access: "
+                    f"{first_urban}%\n"
+                    f"- Overall improved drinking-water access: "
+                    f"{first_overall}%\n\n"
+                    f"{second['state']}:\n"
+                    f"- Rural improved drinking-water access: "
+                    f"{second_rural}%\n"
+                    f"- Urban improved drinking-water access: "
+                    f"{second_urban}%\n"
+                    f"- Overall improved drinking-water access: "
+                    f"{second_overall}%\n\n"
+                )
+
+                if first_overall > second_overall:
+                    reply += (
+                        f"{first['state']} has {overall_difference} "
+                        "percentage points higher overall improved "
+                        f"drinking-water access than {second['state']}."
+                    )
+                elif second_overall > first_overall:
+                    reply += (
+                        f"{second['state']} has {overall_difference} "
+                        "percentage points higher overall improved "
+                        f"drinking-water access than {first['state']}."
+                    )
+                else:
+                    reply += (
+                        "Both states have the same overall improved "
+                        "drinking-water access in the supplied dataset."
+                    )
+
+                return jsonify({
+                    "status": "ok",
+                    "response": reply,
+                    "model": "dataset-analysis",
+                    "source": "MIS 78th Round"
+                })
 
         # ----------------------------------------------------
         # TOP VS BOTTOM COMPARISON
@@ -617,29 +659,22 @@ def watsonx_chat():
         if (
             "difference" in q
             and "top" in q
-            and (
-                "bottom" in q
-                or "lowest" in q
-            )
+            and ("bottom" in q or "lowest" in q)
         ):
-
             lowest = bottom[0]
             highest = top[0]
 
             difference = round(
-                highest["improved_pct"]
-                - lowest["improved_pct"],
+                highest["improved_pct"] - lowest["improved_pct"],
                 1
             )
 
             reply = (
                 f"{highest['state']} has the highest improved "
-                f"drinking-water access at "
-                f"{highest['improved_pct']}%, while "
-                f"{lowest['state']} has the lowest at "
-                f"{lowest['improved_pct']}%. "
-                f"The difference between them is "
-                f"{difference} percentage points."
+                f"drinking-water access at {highest['improved_pct']}%, "
+                f"while {lowest['state']} has the lowest at "
+                f"{lowest['improved_pct']}%. The difference between "
+                f"them is {difference} percentage points."
             )
 
             return jsonify({
@@ -662,14 +697,12 @@ def watsonx_chat():
         ]
 
         if any(word in q for word in lowest_keywords):
-
             result = bottom[0]
 
             reply = (
                 f"According to the MIS 78th Round dataset, "
                 f"{result['state']} has the lowest improved "
-                f"drinking-water access at "
-                f"{result['improved_pct']}%."
+                f"drinking-water access at {result['improved_pct']}%."
             )
 
             return jsonify({
@@ -691,14 +724,12 @@ def watsonx_chat():
         ]
 
         if any(word in q for word in highest_keywords):
-
             result = top[0]
 
             reply = (
                 f"According to the MIS 78th Round dataset, "
                 f"{result['state']} has the highest improved "
-                f"drinking-water access at "
-                f"{result['improved_pct']}%."
+                f"drinking-water access at {result['improved_pct']}%."
             )
 
             return jsonify({
@@ -709,7 +740,7 @@ def watsonx_chat():
             })
 
         # ----------------------------------------------------
-        # OTHER QUESTIONS — IBM GRANITE
+        # GENERAL / EDUCATIONAL QUESTIONS — IBM GRANITE
         # ----------------------------------------------------
 
         context = build_chat_context(df)
@@ -728,7 +759,6 @@ def watsonx_chat():
         })
 
     except Exception as exc:
-
         app.logger.exception("Watsonx chatbot error")
 
         return jsonify({
@@ -743,7 +773,6 @@ def watsonx_chat():
 
 @app.route("/health")
 def health():
-
     return jsonify({
         "status": "healthy",
         "project": "JalDrishti-AI",
@@ -758,7 +787,6 @@ def health():
 # ============================================================
 
 if __name__ == "__main__":
-
     port = int(os.getenv("PORT", 5000))
 
     app.run(
