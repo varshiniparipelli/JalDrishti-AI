@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JalDrishti-AI — Improved Drinking Water Access Analytics</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <span class="drop-icon">💧</span>
+    <span>JalDrishti<span class="accent">-AI</span></span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#kpis">Overview</a></li>
+    <li><a href="#charts">Analytics</a></li>
+    <li><a href="#gaps">Disparities</a></li>
+    <li><a href="#predict">Predictor</a></li>
+    <li><a href="#sdg">SDG 6</a></li>
+    <li><a href="#chatbot">Ask AI</a></li>
+  </ul>
+  <div class="ibm-badge">Powered by <strong>IBM Cloud Lite</strong></div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-content">
+    <h1>&#2332;&#2354; &#2342;&#2371;&#2359;&#2381;&#2335;&#2367; <span class="accent">AI</span></h1>
+    <p class="hero-sub">
+      Analysing <strong>MIS 78th Round (NSS 78th Round)</strong> data on improved drinking water
+      access across <strong>37 States &amp; UTs</strong> of India — supporting <strong>SDG&nbsp;6.1</strong>.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">Problem Statement #38</span>
+      <span class="tag">AI Kosh · nss78_21</span>
+      <span class="tag">IBM Watson ML</span>
+      <span class="tag">IBM Db2</span>
+      <span class="tag">IBM COS</span>
+      <span class="tag">222 Data Points</span>
+    </div>
+    <button class="btn-primary" onclick="loadAll()">Load Dashboard</button>
+  </div>
+</header>
+
+<!-- KPI CARDS -->
+<section id="kpis" class="section">
+  <h2 class="section-title">Key Performance Indicators</h2>
+  <p class="section-sub">MIS 78th Round — National Snapshot (All India, All Sectors)</p>
+  <div class="kpi-grid" id="kpi-grid">
+    <div class="kpi-card skeleton" id="kpi-national">
+      <div class="kpi-value">—</div>
+      <div class="kpi-label">National Improved Access</div>
+    </div>
+    <div class="kpi-card skeleton" id="kpi-rural">
+      <div class="kpi-value">—</div>
+      <div class="kpi-label">Rural Improved Access</div>
+    </div>
+    <div class="kpi-card skeleton" id="kpi-urban">
+      <div class="kpi-value">—</div>
+      <div class="kpi-label">Urban Improved Access</div>
+    </div>
+    <div class="kpi-card skeleton" id="kpi-piped">
+      <div class="kpi-value">—</div>
+      <div class="kpi-label">Piped Water Access</div>
+    </div>
+    <div class="kpi-card skeleton" id="kpi-gap">
+      <div class="kpi-value">—</div>
+      <div class="kpi-label">Rural–Urban Gap</div>
+    </div>
+    <div class="kpi-card skeleton" id="kpi-above90">
+      <div class="kpi-value">—</div>
+      <div class="kpi-label">States Above 90%</div>
+    </div>
+  </div>
+</section>
+
+<!-- CHARTS -->
+<section id="charts" class="section section-alt">
+  <h2 class="section-title">State-wise Analytics</h2>
+  <p class="section-sub">Improved Drinking Water Access — All 37 States &amp; UTs (MIS 78th Round)</p>
+  <div class="chart-grid">
+    <div class="chart-card wide">
+      <h3>Improved Source of Drinking Water by State — All Sectors (%)</h3>
+      <div id="chart-state" class="chart-box" style="height:600px;"></div>
+    </div>
+    <div class="chart-card">
+      <h3>Rural vs Urban vs All India</h3>
+      <div id="chart-sector" class="chart-box"></div>
+    </div>
+    <div class="chart-card">
+      <h3>Piped vs Improved Water — All India</h3>
+      <div id="chart-source" class="chart-box"></div>
+    </div>
+  </div>
+</section>
+
+<!-- DISPARITIES -->
+<section id="gaps" class="section">
+  <h2 class="section-title">Disparities &amp; Equity</h2>
+  <p class="section-sub">Rural–Urban gap and states needing priority intervention</p>
+  <div class="chart-grid">
+    <div class="chart-card wide">
+      <h3>Rural–Urban Gap in Improved Water Access by State (Urban % − Rural %)</h3>
+      <div id="chart-gap" class="chart-box" style="height:520px;"></div>
+    </div>
+    <div class="chart-card">
+      <h3>Bottom 10 States — Lowest Improved Access</h3>
+      <div id="chart-bottom" class="chart-box"></div>
+    </div>
+    <div class="chart-card">
+      <h3>Top 10 States — Highest Improved Access</h3>
+      <div id="chart-top" class="chart-box"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PREDICTOR -->
+<section id="predict" class="section section-alt">
+  <h2 class="section-title">AI Access Predictor</h2>
+  <p class="section-sub">Powered by IBM Watson ML — predict improved water access % for any State &amp; Sector</p>
+  <div class="predict-container">
+    <form id="predict-form" class="predict-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>State / UT</label>
+          <select name="state" id="state-select">
+            <option value="Andaman &amp; Nicobar Islands">Andaman &amp; Nicobar Islands</option>
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+            <option value="Assam">Assam</option>
+            <option value="Bihar">Bihar</option>
+            <option value="Chandigarh">Chandigarh</option>
+            <option value="Chhattisgarh">Chhattisgarh</option>
+            <option value="Dadra &amp; Nagar Haveli and Daman &amp; Diu">Dadra &amp; Nagar Haveli and Daman &amp; Diu</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Goa">Goa</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Himachal Pradesh">Himachal Pradesh</option>
+            <option value="Jammu &amp; Kashmir">Jammu &amp; Kashmir</option>
+            <option value="Jharkhand">Jharkhand</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Ladakh">Ladakh</option>
+            <option value="Lakshadweep">Lakshadweep</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Manipur">Manipur</option>
+            <option value="Meghalaya">Meghalaya</option>
+            <option value="Mizoram">Mizoram</option>
+            <option value="Nagaland">Nagaland</option>
+            <option value="Odisha">Odisha</option>
+            <option value="Puducherry">Puducherry</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Rajasthan" selected>Rajasthan</option>
+            <option value="Sikkim">Sikkim</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Telangana">Telangana</option>
+            <option value="Tripura">Tripura</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="West Bengal">West Bengal</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Sector</label>
+          <select name="sector">
+            <option value="Rural">Rural</option>
+            <option value="Urban">Urban</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn-primary" onclick="trainAndPredict()">Train Model &amp; Predict</button>
+        <button type="button" class="btn-secondary" onclick="runPredict()">Predict Only</button>
+      </div>
+      <p style="font-size:.8rem;color:#5a6a7e;margin-top:.6rem;">
+        "Train Model" uses the real MIS 78th Round data to fit a GradientBoosting regressor on IBM Watson ML, then predicts the improved water access % for your selection.
+      </p>
+    </form>
+    <div id="predict-result" class="predict-result hidden"></div>
+  </div>
+</section>
+
+<!-- SDG PROGRESS -->
+<section id="sdg" class="section">
+  <h2 class="section-title">SDG 6.1 Progress Tracker</h2>
+  <p class="section-sub">Universal access to safe and affordable drinking water by 2030</p>
+  <div id="sdg-container" class="sdg-container">
+    <div class="sdg-bar-wrap">
+      <div class="sdg-bar-label">Current Coverage</div>
+      <div class="sdg-bar-track">
+        <div class="sdg-bar-fill" id="sdg-bar" style="width:0%"></div>
+      </div>
+      <div class="sdg-bar-pct" id="sdg-pct">—</div>
+    </div>
+    <div class="sdg-stats" id="sdg-stats"></div>
+    <div id="chart-sdg" class="chart-box" style="height:280px;margin-top:1.5rem;"></div>
+  </div>
+</section>
+
+<!-- CHATBOT -->
+<section id="chatbot" class="section section-alt">
+  <h2 class="section-title">Ask AI — Watson Assistant</h2>
+  <p class="section-sub">Ask questions about drinking water access, SDG targets, state data, or MIS 78th Round findings</p>
+  <div class="chat-container">
+    <div class="chat-messages" id="chat-messages">
+      <div class="chat-msg bot">
+        <span class="chat-avatar">💧</span>
+        <div class="chat-bubble">
+          Hello! I'm JalDrishti AI, powered by <strong>IBM Watson Assistant</strong>.
+          I can answer questions about India's improved drinking water access, MIS 78th Round findings,
+          state-level disparities, and SDG 6.1 progress. Try asking about Bihar, rural access, or Lakshadweep!
+        </div>
+      </div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="chat-input"
+             placeholder="Ask about Bihar rural access, SDG 6, piped water, gap states…"
+             onkeydown="if(event.key==='Enter') sendChat()" />
+      <button class="btn-primary" onclick="sendChat()">Send</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div>
+    <strong>JalDrishti-AI</strong> · Problem Statement #38 · MIS 78th Round (nss78_21) ·
+    AI&nbsp;Kosh Dataset ·
+    <a href="https://sdgs.un.org/goals/goal6" target="_blank">SDG 6</a>
+  </div>
+  <div class="footer-ibm">Built with IBM Cloud Lite Services — Watson ML · Cloud Object Storage · Db2 · Watson Assistant</div>
+</footer>
+
+<script src="/static/js/dashboard.js"></script>
+</body>
+</html>

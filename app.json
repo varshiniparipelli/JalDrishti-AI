@@ -1,0 +1,75 @@
+{
+  "name": "JalDrishti-AI",
+  "description": "AI-powered Improved Drinking Water Access Analytics — MIS 78th Round (Problem Statement #38)",
+  "repository": "https://github.com/YOUR_USERNAME/JalDrishti-AI",
+  "logo": "https://raw.githubusercontent.com/YOUR_USERNAME/JalDrishti-AI/main/static/css/style.css",
+  "keywords": [
+    "ibm-watsonx",
+    "ibm-granite",
+    "drinking-water",
+    "sdg6",
+    "mis-78th-round",
+    "flask",
+    "python",
+    "ai-kosh",
+    "india"
+  ],
+  "env": {
+    "WATSONX_PROJECT_ID": {
+      "description": "IBM watsonx.ai Project ID",
+      "value": "d35a6f68-c129-4634-b823-ff9583f7fde6"
+    },
+    "WATSONX_URL": {
+      "description": "IBM watsonx.ai endpoint URL",
+      "value": "https://us-south.ml.cloud.ibm.com"
+    },
+    "WATSONX_API_KEY": {
+      "description": "IBM Cloud API Key for watsonx.ai",
+      "generator": "secret"
+    },
+    "IBM_WATSON_ML_API_KEY": {
+      "description": "IBM Watson Machine Learning API Key",
+      "generator": "secret"
+    },
+    "IBM_COS_API_KEY": {
+      "description": "IBM Cloud Object Storage API Key",
+      "generator": "secret"
+    },
+    "IBM_COS_INSTANCE_ID": {
+      "description": "IBM COS Resource Instance ID",
+      "value": ""
+    },
+    "IBM_DB2_HOST": {
+      "description": "IBM Db2 on Cloud hostname",
+      "value": ""
+    },
+    "IBM_DB2_USERNAME": {
+      "description": "IBM Db2 username",
+      "value": ""
+    },
+    "IBM_DB2_PASSWORD": {
+      "description": "IBM Db2 password",
+      "generator": "secret"
+    },
+    "SECRET_KEY": {
+      "description": "Flask secret key",
+      "generator": "secret"
+    },
+    "DATASET_PATH": {
+      "description": "Path to MIS 78th Round dataset",
+      "value": "data/nss78_21.xlsx"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ],
+  "stack": "heroku-22"
+}
