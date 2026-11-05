@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<style>
+  body { font-family: 'Segoe UI', Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 40px; color: #1a1a1a; line-height: 1.7; }
+  h1 { font-size: 22px; color: #0062fe; border-bottom: 3px solid #0062fe; padding-bottom: 10px; margin-bottom: 6px; }
+  h2 { font-size: 16px; color: #003380; margin-top: 24px; margin-bottom: 6px; }
+  h3 { font-size: 14px; color: #0044aa; margin-top: 18px; margin-bottom: 4px; }
+  .meta { background: #f0f4ff; border-left: 4px solid #0062fe; padding: 12px 16px; margin: 16px 0; border-radius: 4px; font-size: 13px; }
+  .meta b { color: #0062fe; }
+  ul { margin: 6px 0 10px 20px; }
+  li { margin-bottom: 5px; font-size: 13.5px; }
+  p { font-size: 13.5px; margin-bottom: 10px; }
+  .ibm { background: #001a33; color: #fff; padding: 10px 16px; border-radius: 6px; font-size: 12px; margin-top: 24px; }
+  .ibm span { color: #00b4d8; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  th { background: #0062fe; color: #fff; padding: 8px 10px; text-align: left; }
+  td { padding: 7px 10px; border-bottom: 1px solid #dde; }
+  tr:nth-child(even) td { background: #f5f8ff; }
+  .footer { margin-top: 30px; font-size: 11px; color: #888; text-align: center; border-top: 1px solid #ddd; padding-top: 10px; }
+</style>
+</head>
+<body>
+
+<h1>Problem Statement #38 — Improved Source of Drinking Water</h1>
+<h2>JalDrishti-AI: AI-Powered Drinking Water Access Analytics</h2>
+
+<div class="meta">
+  <b>Student:</b> Paripelli Varshini &nbsp;|&nbsp;
+  <b>Email:</b> Varshiniparipelli@gmail.com &nbsp;|&nbsp;
+  <b>Mobile:</b> 7569813678<br/>
+  <b>Domain:</b> Water, Health &amp; Sanitation / Public Policy / SDG Analytics<br/>
+  <b>Dataset:</b> AI Kosh — MIS 78th Round (nss78_21.xlsx) &nbsp;|&nbsp;
+  <b>GitHub:</b> https://github.com/varshiniparipelli/JalDrishti-AI
+</div>
+
+<h2>1. Problem Background</h2>
+<p>Access to safe and improved sources of drinking water remains a critical issue in India, especially in rural and underdeveloped regions. Despite ongoing efforts under the Sustainable Development Goals (SDGs), inequalities persist in water accessibility across states and socio-economic groups.</p>
+<p>The MIS 78th Round data reveals key disparities: while the national improved water access stands at <b>95.7%</b>, states like <b>Kerala (55.2%)</b>, <b>Lakshadweep (73.8%)</b>, and <b>Manipur (75.6%)</b> lag severely behind. Piped water coverage is only <b>24.8% in rural areas</b> versus <b>61.5% in urban areas</b> — a critical equity gap requiring targeted policy intervention.</p>
+
+<h2>2. Objective</h2>
+<p>This project analyses data from the <b>78th Round of the Multiple Indicator Survey (MIS)</b> (AI Kosh dataset: nss78_21.xlsx) to:</p>
+<ul>
+  <li>Assess the percentage of population with access to improved drinking water across 37 States &amp; UTs</li>
+  <li>Identify Rural–Urban and inter-state disparities in water access</li>
+  <li>Predict water access levels using IBM Watson ML (GradientBoosting Regressor)</li>
+  <li>Generate AI-powered policy insights using IBM watsonx.ai Granite model</li>
+  <li>Track India's progress toward SDG 6.1 (universal safe water by 2030)</li>
+  <li>Provide an evidence-based interactive policy dashboard for decision-makers</li>
+</ul>
+
+<h2>3. Dataset</h2>
+<div class="meta">
+  <b>Source:</b> AI Kosh — https://aikosh.indiaai.gov.in<br/>
+  <b>File:</b> nss78_21.xlsx &nbsp;|&nbsp; <b>Survey:</b> MIS 78th Round &nbsp;|&nbsp; <b>Year:</b> 2023<br/>
+  <b>Rows:</b> 222 &nbsp;|&nbsp; <b>States/UTs:</b> 37 &nbsp;|&nbsp; <b>Sectors:</b> Rural, Urban, All<br/>
+  <b>Sub-indicators:</b> Improved Source of Drinking Water · Piped Water into Dwelling or Yard/plot
+</div>
+
+<h2>4. Key Findings (Real Data)</h2>
+<table>
+  <tr><th>Indicator</th><th>Value</th></tr>
+  <tr><td>National Improved Water Access</td><td><b>95.7%</b></td></tr>
+  <tr><td>Rural Improved Water Access</td><td>95.0%</td></tr>
+  <tr><td>Urban Improved Water Access</td><td>97.2%</td></tr>
+  <tr><td>Piped Water — Rural</td><td>24.8%</td></tr>
+  <tr><td>Piped Water — Urban</td><td>61.5%</td></tr>
+  <tr><td>Rural–Urban Gap</td><td>2.2 percentage points</td></tr>
+  <tr><td>States above 90% access</td><td>31 out of 36</td></tr>
+  <tr><td>Lowest access — Kerala</td><td>55.2%</td></tr>
+  <tr><td>Highest access — Delhi, Chandigarh</td><td>100%</td></tr>
+  <tr><td>SDG 6.1 Projected 2030 coverage</td><td>100% — On Track</td></tr>
+  <tr><td>AI Model LOO MAE</td><td>3.98 percentage points</td></tr>
+</table>
+
+<h2>5. Solution — JalDrishti-AI</h2>
+<p>JalDrishti-AI is an end-to-end AI analytics platform built on <b>IBM Cloud Lite services</b> that analyses the real MIS 78th Round dataset and provides actionable policy insights through an interactive dashboard.</p>
+
+<h3>IBM Cloud Services Used</h3>
+<ul>
+  <li><b>IBM watsonx.ai</b> — Model: ibm/granite-4-h-small · Project ID: d35a6f68-c129-4634-b823-ff9583f7fde6 · Generates national &amp; state-level policy insights and powers the live AI chat</li>
+  <li><b>IBM Watson Machine Learning (Lite)</b> — GradientBoosting Regressor · LOO MAE: 3.98 pp · Predicts improved water access % per state &amp; sector</li>
+  <li><b>IBM Cloud Object Storage (Lite)</b> — Stores nss78_21.xlsx in jaldrishti-data-bucket · ibm_boto3 SDK</li>
+  <li><b>IBM Db2 on Cloud (Lite)</b> — Table: MIS_DRINKING_WATER · SQL analytics · SSL port 50001</li>
+  <li><b>IBM Watson Assistant (Lite)</b> — Chatbot fallback · 10,000 messages/month · v2 session API</li>
+</ul>
+
+<h3>Technical Stack</h3>
+<ul>
+  <li>Backend: Python 3 + Flask (16 REST endpoints)</li>
+  <li>Analysis: pandas, scikit-learn, joblib</li>
+  <li>Frontend: HTML5 + CSS3 + Plotly.js (7 interactive charts)</li>
+  <li>GitHub: https://github.com/varshiniparipelli/JalDrishti-AI</li>
+</ul>
+
+<h2>6. SDG Alignment</h2>
+<p><b>SDG 6.1:</b> "By 2030, achieve universal and equitable access to safe and affordable drinking water for all." JalDrishti-AI directly supports this target by quantifying current coverage (95.7%), computing annual improvement rate (+3.21%/year), projecting 2030 coverage (100%), and identifying states requiring priority intervention.</p>
+
+<div class="ibm">
+  Built with <span>IBM Cloud Lite Services</span> — watsonx.ai · Watson ML · Cloud Object Storage · Db2 on Cloud · Watson Assistant
+</div>
+
+<div class="footer">
+  JalDrishti-AI · Problem Statement #38 · MIS 78th Round · AI Kosh Dataset · IBM SkillsBuild University Engagement
+</div>
+
+</body>
+</html>
