@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#050d1a; font-family:'Segoe UI',Arial,sans-serif; width:1400px; height:800px; overflow:hidden; }
+
+  .title { text-align:center; padding:16px 0 4px; font-size:26px; font-weight:800; letter-spacing:1.5px;
+    background:linear-gradient(90deg,#00b4d8,#0062fe,#a855f7); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .subtitle { text-align:center; color:#4a6a8a; font-size:11px; margin-bottom:10px; letter-spacing:2px; }
+
+  .arch { display:flex; flex-direction:column; gap:0; padding:0 18px; }
+
+  .layer {
+    display:flex; align-items:stretch; min-height:94px; margin-bottom:4px; border-radius:10px; overflow:hidden;
+  }
+
+  .layer-tag {
+    width:105px; min-width:105px; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:3px;
+    border-radius:10px 0 0 10px; padding:8px 4px;
+  }
+  .layer-tag .tag-icon { font-size:22px; }
+  .layer-tag .tag-label { font-size:9px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; text-align:center; }
+
+  .layer-content {
+    flex:1; display:flex; align-items:center; gap:8px;
+    padding:8px 12px; flex-wrap:wrap;
+    border-radius:0 10px 10px 0;
+  }
+
+  .box {
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; border-radius:8px; padding:7px 10px;
+    border:1.5px solid; flex-shrink:0;
+  }
+  .box .bicon { font-size:18px; margin-bottom:3px; }
+  .box .blabel { font-size:11px; font-weight:700; line-height:1.3; }
+  .box .bsub { font-size:9px; margin-top:2px; opacity:0.8; line-height:1.3; }
+
+  .arrow-down { text-align:center; color:#1a3a5a; font-size:16px; line-height:1; margin:1px 0; }
+
+  .badge { display:inline-block; border-radius:4px; padding:2px 7px; font-size:9px; font-weight:700; margin:2px; }
+
+  .ibm-badge { text-align:center; color:#223344; font-size:9px; letter-spacing:1.5px;
+    border-top:1px solid #0d1f2d; padding-top:5px; margin-top:3px; }
+</style>
+</head>
+<body>
+
+<div class="title">JalDrishti-AI — Architecture Blueprint</div>
+<div class="subtitle">Problem Statement #38 · MIS 78th Round · IBM Cloud Lite Services</div>
+
+<div class="arch">
+
+  <!-- LAYER 1: Presentation -->
+  <div class="layer">
+    <div class="layer-tag" style="background:linear-gradient(135deg,#001a33,#003080);">
+      <div class="tag-icon">🖥️</div>
+      <div class="tag-label" style="color:#66aaff;">Presentation<br/>Layer</div>
+    </div>
+    <div class="layer-content" style="background:rgba(0,62,180,0.08);border:1px solid rgba(0,100,220,0.2);">
+      <div class="box" style="border-color:#00b4d8;background:#001528;width:170px;height:72px;">
+        <div class="bicon">📊</div>
+        <div class="blabel" style="color:#66ddff;">Dashboard UI</div>
+        <div class="bsub" style="color:#4499bb;">HTML5 + CSS3<br/>Plotly.js Charts</div>
+      </div>
+      <div class="box" style="border-color:#0062fe;background:#001028;width:155px;height:72px;">
+        <div class="bicon">📈</div>
+        <div class="blabel" style="color:#88aaff;">7 Interactive Charts</div>
+        <div class="bsub" style="color:#5577cc;">State · Sector · Gap<br/>Top/Bottom 10 · SDG</div>
+      </div>
+      <div class="box" style="border-color:#0062fe;background:#001028;width:155px;height:72px;">
+        <div class="bicon">🤖</div>
+        <div class="blabel" style="color:#88aaff;">AI Chat Interface</div>
+        <div class="bsub" style="color:#5577cc;">Granite-4 responses<br/>Typing indicator</div>
+      </div>
+      <div class="box" style="border-color:#0062fe;background:#001028;width:155px;height:72px;">
+        <div class="bicon">🔮</div>
+        <div class="blabel" style="color:#88aaff;">AI Predictor</div>
+        <div class="bsub" style="color:#5577cc;">State + Sector input<br/>→ % prediction</div>
+      </div>
+      <div class="box" style="border-color:#0062fe;background:#001028;width:155px;height:72px;">
+        <div class="bicon">🎯</div>
+        <div class="blabel" style="color:#88aaff;">SDG 6.1 Tracker</div>
+        <div class="bsub" style="color:#5577cc;">Progress bar<br/>2030 projection</div>
+      </div>
+      <div class="box" style="border-color:#0062fe;background:#001028;width:150px;height:72px;">
+        <div class="bicon">📱</div>
+        <div class="blabel" style="color:#88aaff;">6 KPI Cards</div>
+        <div class="bsub" style="color:#5577cc;">National · Rural · Urban<br/>Piped · Gap · States</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow-down">▼ &nbsp; REST API Calls (fetch / JSON) &nbsp; ▼</div>
+
+  <!-- LAYER 2: Application -->
+  <div class="layer">
+    <div class="layer-tag" style="background:linear-gradient(135deg,#0d3320,#1a5535);">
+      <div class="tag-icon">⚙️</div>
+      <div class="tag-label" style="color:#66ee99;">Application<br/>Layer</div>
+    </div>
+    <div class="layer-content" style="background:rgba(36,161,72,0.07);border:1px solid rgba(36,161,72,0.2);">
+      <div class="box" style="border-color:#24a148;background:#0a2015;width:175px;height:72px;">
+        <div class="bicon">🐍</div>
+        <div class="blabel" style="color:#66ee99;">Flask REST API</div>
+        <div class="bsub" style="color:#44cc77;">app.py · Python 3<br/>flask-cors · 16 endpoints</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="display:flex;gap:6px;">
+          <span class="badge" style="background:#0d3320;color:#5de;border:1px solid #1e5530;">/api/kpis</span>
+          <span class="badge" style="background:#0d3320;color:#5de;border:1px solid #1e5530;">/api/state-analysis</span>
+          <span class="badge" style="background:#0d3320;color:#5de;border:1px solid #1e5530;">/api/sector-analysis</span>
+          <span class="badge" style="background:#0d3320;color:#5de;border:1px solid #1e5530;">/api/state-gap</span>
+          <span class="badge" style="background:#0d3320;color:#5de;border:1px solid #1e5530;">/api/water-sources</span>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <span class="badge" style="background:#0d3320;color:#5de;border:1px solid #1e5530;">/api/top-states</span>
+          <span class="badge" style="background:#0d3320;color:#5de;border:1px solid #1e5530;">/api/bottom-states</span>
+          <span class="badge" style="background:#0d3320;color:#5de;border:1px solid #1e5530;">/api/sdg-progress</span>
+          <span class="badge" style="background:#0d3320;color:#f90;border:1px solid #664400;">/api/train</span>
+          <span class="badge" style="background:#0d3320;color:#f90;border:1px solid #664400;">/api/predict</span>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <span class="badge" style="background:#1a0533;color:#cc99ff;border:1px solid #441166;">/api/watsonx/chat</span>
+          <span class="badge" style="background:#1a0533;color:#cc99ff;border:1px solid #441166;">/api/watsonx/state-insight</span>
+          <span class="badge" style="background:#1a0533;color:#cc99ff;border:1px solid #441166;">/api/watsonx/national-insight</span>
+          <span class="badge" style="background:#0d3320;color:#5de;border:1px solid #1e5530;">/api/cos/upload</span>
+          <span class="badge" style="background:#0d3320;color:#5de;border:1px solid #1e5530;">/health</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow-down">▼ &nbsp; Service calls (IBM SDKs / REST) &nbsp; ▼</div>
+
+  <!-- LAYER 3: IBM Cloud Services -->
+  <div class="layer">
+    <div class="layer-tag" style="background:linear-gradient(135deg,#1a0533,#3d0d7a);">
+      <div class="tag-icon">☁️</div>
+      <div class="tag-label" style="color:#cc99ff;">IBM Cloud<br/>Lite Services</div>
+    </div>
+    <div class="layer-content" style="background:rgba(105,41,196,0.07);border:1px solid rgba(105,41,196,0.25);">
+      <div class="box" style="border-color:#7c3aed;background:#110022;width:190px;height:72px;">
+        <div class="bicon">🧠</div>
+        <div class="blabel" style="color:#cc99ff;">IBM watsonx.ai</div>
+        <div class="bsub" style="color:#aa77ee;">ibm/granite-4-h-small<br/>Project: d35a6f68…<br/>Text generation API</div>
+      </div>
+      <div class="box" style="border-color:#0062fe;background:#001022;width:175px;height:72px;">
+        <div class="bicon">⚗️</div>
+        <div class="blabel" style="color:#88aaff;">IBM Watson ML</div>
+        <div class="bsub" style="color:#5577dd;">GradientBoosting<br/>LOO MAE: 3.98 pp<br/>Model deployment</div>
+      </div>
+      <div class="box" style="border-color:#009d9a;background:#001818;width:175px;height:72px;">
+        <div class="bicon">🗄️</div>
+        <div class="blabel" style="color:#88eeff;">IBM Cloud COS</div>
+        <div class="bsub" style="color:#66ccdd;">jaldrishti-data-bucket<br/>nss78_21.xlsx<br/>ibm_boto3 SDK</div>
+      </div>
+      <div class="box" style="border-color:#1192e8;background:#001022;width:175px;height:72px;">
+        <div class="bicon">🏛️</div>
+        <div class="blabel" style="color:#88ccff;">IBM Db2 on Cloud</div>
+        <div class="bsub" style="color:#6699bb;">MIS_DRINKING_WATER<br/>SQL analytics<br/>bludb · SSL port 50001</div>
+      </div>
+      <div class="box" style="border-color:#f1c21b;background:#141000;width:175px;height:72px;">
+        <div class="bicon">💬</div>
+        <div class="blabel" style="color:#ffe566;">Watson Assistant</div>
+        <div class="bsub" style="color:#ccaa44;">Chat fallback<br/>10K msg/month<br/>v2 session API</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow-down">▼ &nbsp; Data processing (pandas / scikit-learn) &nbsp; ▼</div>
+
+  <!-- LAYER 4: Data -->
+  <div class="layer">
+    <div class="layer-tag" style="background:linear-gradient(135deg,#1a1400,#332800);">
+      <div class="tag-icon">📊</div>
+      <div class="tag-label" style="color:#ffe566;">Data Layer</div>
+    </div>
+    <div class="layer-content" style="background:rgba(241,194,27,0.06);border:1px solid rgba(241,194,27,0.2);">
+      <div class="box" style="border-color:#f1c21b;background:#141000;width:230px;height:72px;">
+        <div class="bicon">📁</div>
+        <div class="blabel" style="color:#ffe566;">AI Kosh — nss78_21.xlsx</div>
+        <div class="bsub" style="color:#ccaa44;">MIS 78th Round · 222 rows · 37 States/UTs<br/>Improved Source · Piped Water · Rural/Urban/All</div>
+      </div>
+      <div class="box" style="border-color:#da1e28;background:#1a0800;width:210px;height:72px;">
+        <div class="bicon">🔬</div>
+        <div class="blabel" style="color:#ffaa88;">analysis.py — Data Engine</div>
+        <div class="bsub" style="color:#dd8866;">compute_kpis() · state_analysis()<br/>sector_analysis() · state_gap_analysis()<br/>sdg_progress() · train_model() · predict_access()</div>
+      </div>
+      <div class="box" style="border-color:#555;background:#0a0a0a;width:210px;height:72px;">
+        <div class="bicon">📦</div>
+        <div class="blabel" style="color:#aaaaaa;">Models (local)</div>
+        <div class="bsub" style="color:#888888;">water_access_model.pkl<br/>label_encoders.pkl<br/>joblib serialization</div>
+      </div>
+      <div class="box" style="border-color:#24a148;background:#051505;width:260px;height:72px;">
+        <div class="bicon">📊</div>
+        <div class="blabel" style="color:#66ee99;">Key Findings (Real Data)</div>
+        <div class="bsub" style="color:#44cc77;">National: 95.7% · Rural: 95.0% · Urban: 97.2%<br/>Piped (Rural): 24.8% · Piped (Urban): 61.5%<br/>SDG 6.1: On Track → Projected 100% by 2030</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="ibm-badge" style="margin:4px 18px 0;">
+  IBM watsonx.ai · IBM Watson ML · IBM Cloud Object Storage · IBM Db2 on Cloud · IBM Watson Assistant · Python Flask · Plotly.js
+</div>
+
+</body>
+</html>
