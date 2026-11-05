@@ -278,7 +278,7 @@ async function trainAndPredict() {
   try {
     const trainRes = await api("/api/train", { method: "POST" });
     const tr = trainRes.data;
-    await runPredict(`Model trained — LOO MAE: ${tr.loo_mae_pp} pp | Train MAE: ${tr.train_mae_pp} pp on ${tr.n_samples} samples`);
+    await runPredict(`Model trained — 5-Fold CV MAE: ${tr.loo_mae_pp} pp | Train MAE: ${tr.train_mae_pp} pp on ${tr.n_samples} samples`);
   } catch (err) {
     resultEl.textContent = "Training error: " + err.message;
   }
