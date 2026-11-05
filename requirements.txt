@@ -1,7 +1,9 @@
+setuptools<81
+ibm-cloud-sdk-core==3.20.6
 flask==3.0.3
 flask-cors==4.0.1
 python-dotenv==1.0.1
-pandas==2.2.2
+pandas==2.1.4
 numpy==1.26.4
 scikit-learn==1.5.0
 matplotlib==3.9.0
@@ -11,7 +13,7 @@ ibm-watson==8.1.0
 ibm-cos-sdk==2.13.6
 ibm-db==3.2.3
 ibm_watson_machine_learning==1.0.360
-requests==2.32.3
+requests==2.32.2
 Werkzeug==3.0.3
 gunicorn==22.0.0
 joblib==1.4.2
