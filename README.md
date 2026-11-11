@@ -1,9 +1,16 @@
 
 # JalDrishti-AI 💧
 
-**Live Demo:** [Click here to use JalDrishti-AI](https://jaldrishti-ai-4.onrender.com)
+> **AI-powered Improved Drinking Water Access Analytics — Problem Statement #38**
+> *MIS 78th Round (AI Kosh) · IBM watsonx.ai · IBM Watson ML · IBM COS · IBM Db2*
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Render-brightgreen?logo=render)](https://jaldrishti-ai-4.onrender.com)
+[![GitHub](https://img.shields.io/badge/GitHub-varshiniparipelli-181717?logo=github)](https://github.com/varshiniparipelli/JalDrishti-AI)
+[![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python)](https://www.python.org)
+[![IBM watsonx.ai](https://img.shields.io/badge/IBM-watsonx.ai-054ADA?logo=ibm)](https://www.ibm.com/watsonx)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
+**🔗 Live Application:** [https://jaldrishti-ai-4.onrender.com](https://jaldrishti-ai-4.onrender.com)
 
 **Problem Statement #38 — Improved Source of Drinking Water**
 *AI-powered analytics platform for MIS 78th Round data, built on IBM Cloud Lite services*
