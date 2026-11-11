@@ -1,0 +1,49 @@
+services:
+  - type: web
+    name: jaldrishti-ai-flask
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 1 --timeout 120
+    envVars:
+      - key: WATSONX_PROJECT_ID
+        value: d35a6f68-c129-4634-b823-ff9583f7fde6
+      - key: WATSONX_URL
+        value: https://us-south.ml.cloud.ibm.com
+      - key: WATSONX_API_KEY
+        sync: false
+      - key: IBM_WATSON_ML_API_KEY
+        sync: false
+      - key: IBM_COS_API_KEY
+        sync: false
+      - key: IBM_COS_INSTANCE_ID
+        sync: false
+      - key: IBM_COS_ENDPOINT
+        value: https://s3.us-south.cloud-object-storage.appdomain.cloud
+      - key: IBM_COS_AUTH_ENDPOINT
+        value: https://iam.cloud.ibm.com/identity/token
+      - key: IBM_COS_BUCKET_NAME
+        value: jaldrishti-data-bucket
+      - key: IBM_DB2_HOST
+        sync: false
+      - key: IBM_DB2_PORT
+        value: "50001"
+      - key: IBM_DB2_DATABASE
+        value: bludb
+      - key: IBM_DB2_USERNAME
+        sync: false
+      - key: IBM_DB2_PASSWORD
+        sync: false
+      - key: IBM_DB2_SSL
+        value: "True"
+      - key: IBM_ASSISTANT_API_KEY
+        sync: false
+      - key: IBM_ASSISTANT_URL
+        sync: false
+      - key: IBM_ASSISTANT_ENVIRONMENT_ID
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATASET_PATH
+        value: data/nss78_21.xlsx
+      - key: FLASK_DEBUG
+        value: "False"

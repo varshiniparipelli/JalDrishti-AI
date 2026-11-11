@@ -26,6 +26,8 @@ from analysis import (
     train_model,
     predict_access,
     sdg_progress,
+    age_group_analysis,
+    gender_analysis,
 )
 
 WATSONX_PROJECT_ID = os.getenv(
@@ -221,6 +223,53 @@ def api_sdg():
     return jsonify({
         "status": "ok",
         "data": sdg_progress(get_df())
+    })
+
+
+# ============================================================
+# AGE GROUP ANALYSIS
+# ============================================================
+
+@app.route("/api/age-group-analysis")
+def api_age_group():
+    return jsonify({
+        "status": "ok",
+        "data": age_group_analysis(get_df())
+    })
+
+
+# ============================================================
+# GENDER ANALYSIS
+# ============================================================
+
+@app.route("/api/gender-analysis")
+def api_gender():
+    return jsonify({
+        "status": "ok",
+        "data": gender_analysis(get_df())
+    })
+
+
+# ============================================================
+# FULL REPORT — single call returns everything
+# ============================================================
+
+@app.route("/api/full-report")
+def api_full_report():
+    df = get_df()
+    return jsonify({
+        "status": "ok",
+        "data": {
+            "kpis":             compute_kpis(df),
+            "sdg_progress":     sdg_progress(df),
+            "sector_analysis":  sector_analysis(df),
+            "top_states":       top_states(df, 10),
+            "bottom_states":    bottom_states(df, 10),
+            "state_gap":        state_gap_analysis(df),
+            "water_sources":    water_source_distribution(df),
+            "age_group":        age_group_analysis(df),
+            "gender":           gender_analysis(df),
+        }
     })
 
 

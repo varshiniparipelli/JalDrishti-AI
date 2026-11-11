@@ -266,7 +266,6 @@ not an observed survey result. Do not invent statistics.
 # ============================================================
 
 def _project_features_answer():
-
     return (
         "The prediction model uses two input features: state and "
         "sector (rural or urban). Both are converted into numerical "
@@ -275,7 +274,6 @@ def _project_features_answer():
 
 
 def _unused_features_answer():
-
     return (
         "No. The current JalDrishti-AI prediction model does not use "
         "rainfall or income as input features. It uses only state "
@@ -284,7 +282,6 @@ def _unused_features_answer():
 
 
 def _actual_vs_predicted_answer():
-
     return (
         "Actual values are the drinking-water access percentages "
         "recorded in the MIS 78th Round dataset. Predicted values "
@@ -298,7 +295,6 @@ def _actual_vs_predicted_answer():
 
 
 def _project_model_answer():
-
     return (
         "JalDrishti-AI uses GradientBoostingRegressor from scikit-learn. "
         "It builds decision trees sequentially, with each new tree "
@@ -312,7 +308,6 @@ def _project_model_answer():
 
 
 def _cross_validation_answer():
-
     return (
         "The project uses 5-Fold K-Fold cross-validation. The training "
         "data is divided into five parts. The model trains on four parts "
@@ -322,7 +317,6 @@ def _cross_validation_answer():
 
 
 def _mae_answer():
-
     return (
         "The project evaluates prediction errors using Mean Absolute "
         "Error (MAE). MAE calculates the average absolute difference "
@@ -333,7 +327,6 @@ def _mae_answer():
 
 
 def _project_architecture_answer():
-
     return (
         "JalDrishti-AI is a Flask-based drinking-water analytics "
         "application. Python and pandas process the MIS 78th Round "
@@ -346,15 +339,89 @@ def _project_architecture_answer():
 
 
 def _dataset_answer():
-
     return (
         "JalDrishti-AI uses the MIS 78th Round dataset stored at "
-        "data/nss78_21.xlsx. It contains fields such as State, "
+        "data/nss78_21.xlsx. It contains fields such as state, "
         "age_group, sector, gender, indicator, sub_indicator, value, "
-        "and total_count. The project uses these records to analyze "
+        "and total_count. The project uses these records to analyse "
         "improved drinking-water access, piped-water access, and "
         "rural-urban differences. The dataset also supplies training "
         "records for the prediction model."
+    )
+
+
+def _problem_statement_answer():
+    return (
+        "Problem Statement #38 asks us to analyse data from the MIS 78th "
+        "Round to assess the percentage of India's population with access "
+        "to improved drinking water sources, and to explore related "
+        "indicators such as piped-water access and rural-urban disparities. "
+        "The goal is to generate actionable insights for evidence-based "
+        "policymaking and support India's progress toward SDG 6.1 — "
+        "universal safe water access by 2030."
+    )
+
+
+def _national_kpi_answer():
+    return (
+        "According to the MIS 78th Round (nss78_21.xlsx), India's national "
+        "improved drinking-water access is 95.7%. Rural access is 95.0% and "
+        "urban access is 97.2%, with a rural-urban gap of 2.2 percentage "
+        "points. Piped water into dwelling or yard/plot coverage is 35.5% "
+        "nationally — 24.8% rural and 61.5% urban. 31 out of 36 states and "
+        "UTs exceed the 90% improved-access threshold."
+    )
+
+
+def _sdg_answer():
+    return (
+        "SDG 6.1 aims for universal and equitable access to safe and "
+        "affordable drinking water for all by 2030. According to MIS 78th "
+        "Round data, India's current coverage is 95.7%. At the observed "
+        "annual improvement rate of 3.21 percentage points per year — "
+        "measured from the 2015 baseline of 70% — the projected 2030 "
+        "coverage is 100%, indicating India is on track for SDG 6.1. "
+        "However, piped-water access (35.5%) and state-level disparities "
+        "remain challenges requiring targeted intervention."
+    )
+
+
+def _ibm_services_answer():
+    return (
+        "JalDrishti-AI uses four IBM Cloud Lite services: "
+        "(1) IBM watsonx.ai with Granite 4 H Small for the AI chatbot and "
+        "policy insights; "
+        "(2) IBM Watson Machine Learning for remote model deployment and "
+        "prediction via the /api/watson-predict endpoint; "
+        "(3) IBM Cloud Object Storage for storing the MIS 78th Round dataset "
+        "in a secure cloud bucket; "
+        "(4) IBM Db2 on Cloud for relational database storage of survey "
+        "records. IBM Watson Assistant provides a chatbot fallback layer."
+    )
+
+
+def _piped_water_answer():
+    return (
+        "Piped water into dwelling or yard/plot and improved source of "
+        "drinking water are two separate indicators in MIS 78th Round. "
+        "Improved source (95.7% nationally) includes tube wells, boreholes, "
+        "protected dug wells, and piped water — any source meeting WHO/JMP "
+        "safe-water criteria. Piped-water coverage (35.5% nationally) is a "
+        "subset: only households with water piped directly to the home or "
+        "yard. Rural piped coverage is just 24.8%, while urban is 61.5%, "
+        "showing significant infrastructure disparity."
+    )
+
+
+def _kerala_answer():
+    return (
+        "Kerala has the lowest overall improved drinking-water access score "
+        "(55.2%) in the MIS 78th Round dataset. This is a measurement "
+        "artefact: Kerala households largely rely on private dug wells, "
+        "which may not meet the WHO/JMP 'improved source' classification "
+        "even if the water is clean. It does not indicate poor water quality "
+        "— Kerala has very high overall water availability. The state's "
+        "rural access is 54.4% and urban is 55.9%."
     )
 
 
@@ -494,6 +561,80 @@ def _get_verified_answer(user_question: str):
     if any(term in q for term in dataset_terms):
         return _dataset_answer()
 
+    # Problem statement
+    if any(term in q for term in [
+        "problem statement",
+        "problem statement 38",
+        "problem statement #38",
+        "what is jaldrishti",
+        "what does jaldrishti",
+        "objective of",
+        "goal of jaldrishti"
+    ]):
+        return _problem_statement_answer()
+
+    # National KPIs / statistics
+    if any(term in q for term in [
+        "national improved",
+        "national access",
+        "all india",
+        "national percentage",
+        "overall access",
+        "india's water",
+        "india water access",
+        "national kpi",
+        "kpi",
+        "95.7",
+        "current coverage"
+    ]):
+        return _national_kpi_answer()
+
+    # SDG 6 / SDG 6.1
+    if any(term in q for term in [
+        "sdg 6",
+        "sdg6",
+        "sdg goal 6",
+        "sustainable development",
+        "2030 target",
+        "universal access",
+        "on track",
+        "projected 2030",
+        "sdg progress"
+    ]):
+        return _sdg_answer()
+
+    # IBM Cloud services
+    if any(term in q for term in [
+        "ibm cloud",
+        "ibm services",
+        "ibm watson",
+        "ibm cos",
+        "ibm db2",
+        "watsonx",
+        "granite",
+        "cloud services",
+        "watson ml",
+        "object storage"
+    ]):
+        return _ibm_services_answer()
+
+    # Piped water vs improved source
+    if any(term in q for term in [
+        "piped water",
+        "piped vs",
+        "difference between piped",
+        "piped access",
+        "piped coverage",
+        "35.5",
+        "24.8",
+        "61.5"
+    ]):
+        return _piped_water_answer()
+
+    # Kerala outlier explanation
+    if "kerala" in q:
+        return _kerala_answer()
+
     return None
 
 
@@ -518,24 +659,48 @@ def chat_response(
 You are JalDrishti AI, an intelligent assistant for
 India's drinking-water access and MIS 78th Round data.
 
-You are powered by IBM Granite through IBM watsonx.ai.
+You are powered by IBM Granite 4 H Small through IBM watsonx.ai.
 
 VERIFIED PROJECT FACTS:
 
-- The project uses Flask.
-- The primary dataset is data/nss78_21.xlsx.
-- The dataset is from the MIS 78th Round.
-- The prediction algorithm is scikit-learn GradientBoostingRegressor.
-- The model has 50 estimators.
-- Maximum tree depth is 2.
-- Learning rate is 0.05.
-- Random state is 42.
-- Input features are state and sector.
-- Both features are encoded using LabelEncoder.
-- The target is improved drinking-water access percentage.
-- Model validation uses 5-Fold K-Fold cross-validation.
-- The evaluation metric is Mean Absolute Error (MAE).
-- The trained model and encoders are saved using joblib.
+Project context:
+- Problem Statement #38: Improved Source of Drinking Water.
+- Dataset: MIS 78th Round (nss78_21.xlsx) from AI Kosh.
+- 222 data points across 36 states/UTs, 2 sub-indicators.
+- The project uses Flask as the backend framework.
+
+National KPIs (real MIS 78th Round data):
+- National improved drinking-water access: 95.7%.
+- Rural improved access: 95.0%.
+- Urban improved access: 97.2%.
+- Rural-urban gap: 2.2 percentage points.
+- Piped water into dwelling (all India): 35.5%.
+- Piped water rural: 24.8%; urban: 61.5%.
+- States above 90% improved access: 31 out of 36.
+- Top states: Delhi and Chandigarh (100%).
+- Lowest state: Kerala (55.2%) — well-reliance artefact.
+
+SDG 6.1 progress:
+- 2015 baseline: 70%. Current: 95.7%. Target: 100% by 2030.
+- Annual improvement rate: 3.21 pp/yr.
+- Projected 2030 coverage: 100%. India is on track.
+
+ML model:
+- Algorithm: scikit-learn GradientBoostingRegressor.
+- 50 estimators, max_depth=2, learning_rate=0.05, random_state=42.
+- Input features: state and sector (LabelEncoder encoded).
+- Target: improved drinking-water access percentage.
+- Validation: 5-Fold K-Fold cross-validation.
+- Evaluation metric: Mean Absolute Error (MAE) = 4.97 pp (5-fold CV).
+- Train MAE: 3.46 pp. Within 5 pp: 80.6%. Within 10 pp: 90.3%.
+- Saved with joblib.
+
+IBM Cloud Lite services used:
+- IBM watsonx.ai (Granite 4 H Small) — AI chatbot and policy insights.
+- IBM Watson Machine Learning — remote model deployment (/api/watson-predict).
+- IBM Cloud Object Storage — dataset bucket storage (/api/cos/upload).
+- IBM Db2 on Cloud — relational DB for survey records.
+- IBM Watson Assistant — chatbot fallback.
 
 The model does not use rainfall, income, literacy,
 ration-card status, governance scores, or infrastructure budgets.
@@ -548,10 +713,10 @@ DATA ACCURACY:
    percentages, and water-access indicators.
 2. Never invent state rankings or survey percentages.
 3. Improved drinking-water access and piped-water access
-   are different indicators.
+   are two different indicators — never conflate them.
 4. Never invent report quotations, page numbers, citations,
    or references.
-5. If a requested statistic is not supplied, say so.
+5. If a requested statistic is not supplied, say so clearly.
 
 GENERAL KNOWLEDGE:
 

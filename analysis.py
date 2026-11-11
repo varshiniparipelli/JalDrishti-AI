@@ -296,14 +296,60 @@ def sdg_progress(df: pd.DataFrame) -> dict:
     }
 
 
-# ── ML Model (Optimized for Render Deployment) ───────────────────────────────
+# ── Age Group Analysis ───────────────────────────────────────────────────────
+
+def age_group_analysis(df: pd.DataFrame) -> list:
+    """Improved water access by age group — All India, All sectors."""
+
+    imp = _improved(df)
+    ai = imp[
+        (imp["state"] == "All India") &
+        (imp["sector"] == "All")
+    ]
+
+    rows = []
+    for _, r in ai.iterrows():
+        age = str(r.get("age_group", "")).strip()
+        if age and age.lower() not in ("all", "total", "nan", ""):
+            rows.append({
+                "age_group": age,
+                "improved_pct": round(float(r["value"]), 1),
+            })
+
+    rows.sort(key=lambda x: x["improved_pct"], reverse=True)
+    return rows
+
+
+# ── Gender Analysis ──────────────────────────────────────────────────────────
+
+def gender_analysis(df: pd.DataFrame) -> list:
+    """Improved water access by gender — All India, All sectors."""
+
+    imp = _improved(df)
+    ai = imp[
+        (imp["state"] == "All India") &
+        (imp["sector"] == "All")
+    ]
+
+    rows = []
+    for _, r in ai.iterrows():
+        gender = str(r.get("gender", "")).strip()
+        if gender and gender.lower() not in ("all", "total", "persons", "nan", ""):
+            rows.append({
+                "gender": gender,
+                "improved_pct": round(float(r["value"]), 1),
+            })
+
+    rows.sort(key=lambda x: x["improved_pct"], reverse=True)
+    return rows
+
 
 def train_model(df: pd.DataFrame) -> dict:
     """
-    Train a lightweight GradientBoosting regressor.
+    Train a GradientBoosting regressor on MIS 78th Round data.
 
-    Uses 5-fold cross-validation instead of Leave-One-Out CV
-    to reduce training time on limited deployment resources.
+    Features: state (encoded) + sector (encoded).
+    Uses 5-fold cross-validation to estimate generalisation error.
     """
 
     from sklearn.ensemble import GradientBoostingRegressor
@@ -329,13 +375,12 @@ def train_model(df: pd.DataFrame) -> dict:
     le_state = LabelEncoder()
     le_sector = LabelEncoder()
 
-    imp["state_enc"] = le_state.fit_transform(imp["state"])
+    imp["state_enc"]  = le_state.fit_transform(imp["state"])
     imp["sector_enc"] = le_sector.fit_transform(imp["sector"])
 
     X = imp[["state_enc", "sector_enc"]].values
     y = imp["value"].values
 
-    # Smaller model to reduce CPU and memory usage
     model = GradientBoostingRegressor(
         n_estimators=50,
         max_depth=2,
@@ -343,17 +388,10 @@ def train_model(df: pd.DataFrame) -> dict:
         random_state=42
     )
 
-    # 5-fold CV instead of expensive Leave-One-Out CV
-    cv = KFold(
-        n_splits=5,
-        shuffle=True,
-        random_state=42
-    )
+    cv = KFold(n_splits=5, shuffle=True, random_state=42)
 
     cv_scores = cross_val_score(
-        model,
-        X,
-        y,
+        model, X, y,
         cv=cv,
         scoring="neg_mean_absolute_error",
         n_jobs=1
@@ -361,25 +399,14 @@ def train_model(df: pd.DataFrame) -> dict:
 
     cv_mae = -cv_scores.mean()
 
-    # Train final model on all available records
     model.fit(X, y)
 
-    train_mae = mean_absolute_error(
-        y,
-        model.predict(X)
-    )
+    train_mae = mean_absolute_error(y, model.predict(X))
 
     os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
 
     joblib.dump(model, MODEL_PATH)
-
-    joblib.dump(
-        {
-            "state": le_state,
-            "sector": le_sector
-        },
-        ENCODER_PATH
-    )
+    joblib.dump({"state": le_state, "sector": le_sector}, ENCODER_PATH)
 
     print(
         f"[ML] Model trained — "
@@ -388,12 +415,12 @@ def train_model(df: pd.DataFrame) -> dict:
     )
 
     return {
-        "loo_mae_pp": round(float(cv_mae), 2),
-        "train_mae_pp": round(float(train_mae), 2),
-        "n_samples": len(y),
-        "features": ["state", "sector"],
-        "model": "GradientBoostingRegressor",
-        "note": "MAE = mean absolute error in percentage points (5-fold CV)"
+        "loo_mae_pp":   round(float(cv_mae),      2),
+        "train_mae_pp": round(float(train_mae),   2),
+        "n_samples":    len(y),
+        "features":     ["state", "sector"],
+        "model":        "GradientBoostingRegressor",
+        "note":         "MAE = mean absolute error in percentage points (5-fold CV)"
     }
 
 

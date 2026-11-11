@@ -376,6 +376,74 @@ a:hover { text-decoration: underline; }
 .footer a { color: var(--accent2); }
 .footer-ibm { margin-top: .3rem; font-size: .75rem; opacity: .6; }
 
+/* ── IBM SERVICES ─────────────────────────────────────────────────────── */
+.ibm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  max-width: 1280px; margin: 0 auto;
+}
+
+.ibm-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.25rem;
+  box-shadow: var(--shadow);
+  transition: transform .2s;
+}
+
+.ibm-card:hover { transform: translateY(-3px); }
+
+.ibm-icon { font-size: 1.8rem; margin-bottom: .5rem; }
+
+.ibm-name {
+  font-size: 1rem; font-weight: 700;
+  color: var(--text); margin-bottom: .4rem;
+}
+
+.ibm-desc {
+  font-size: .85rem; color: var(--muted);
+  line-height: 1.55; margin-bottom: .75rem;
+}
+
+.ibm-endpoints code {
+  display: block;
+  font-size: .75rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: .2rem .5rem;
+  margin-top: .3rem;
+  color: var(--accent);
+}
+
+/* ── NATIONAL INSIGHT ─────────────────────────────────────────────────── */
+.insight-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  max-width: 860px;
+}
+
+.insight-header {
+  display: flex; align-items: center; gap: .75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.insight-icon { font-size: 1.5rem; }
+
+.insight-body {
+  font-size: .95rem; line-height: 1.7;
+  color: var(--text); min-height: 48px;
+}
+
+.insight-placeholder { color: var(--muted); font-style: italic; }
+
 /* ── RESPONSIVE ───────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .hero h1   { font-size: 2rem; }
@@ -383,4 +451,5 @@ a:hover { text-decoration: underline; }
   .chart-card.wide { grid-column: 1; }
   .nav-links { display: none; }
   .predict-container { padding: 1.25rem; }
+  .ibm-grid { grid-template-columns: 1fr; }
 }

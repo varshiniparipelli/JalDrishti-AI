@@ -12,21 +12,25 @@ const api = async (path, opts = {}) => {
 
 /* ── Load everything ──────────────────────────────────────────────── */
 async function loadAll() {
-  try {
-    await Promise.all([
-      loadKPIs(),
-      loadStateChart(),
-      loadSectorChart(),
-      loadSourceChart(),
-      loadGapChart(),
-      loadBottomChart(),
-      loadTopChart(),
-      loadSDG(),
-    ]);
-  } catch (err) {
-    console.error("Dashboard load error:", err);
-    alert("Could not load dashboard. Make sure the Flask server is running on port 5000.");
-  }
+  const tasks = [
+    loadKPIs(),
+    loadStateChart(),
+    loadSectorChart(),
+    loadSourceChart(),
+    loadGapChart(),
+    loadBottomChart(),
+    loadTopChart(),
+    loadSDG(),
+    loadAgeChart(),
+    loadGenderChart(),
+  ];
+  // Settle all — never let one failure block the others
+  const results = await Promise.allSettled(tasks);
+  results.forEach((r, i) => {
+    if (r.status === "rejected") {
+      console.warn(`Dashboard task ${i} failed:`, r.reason?.message || r.reason);
+    }
+  });
 }
 
 /* ── KPIs ─────────────────────────────────────────────────────────── */
@@ -258,6 +262,77 @@ async function loadSDG() {
     plot_bgcolor: "transparent", paper_bgcolor: "transparent",
     font: { family: "Segoe UI, sans-serif", size: 12 },
   }, { responsive: true, displayModeBar: false });
+}
+
+/* ── Age Group Chart ─────────────────────────────────────────────── */
+async function loadAgeChart() {
+  const { data } = await api("/api/age-group-analysis");
+  if (!data || data.length === 0) {
+    document.getElementById("chart-age").innerHTML =
+      '<p style="text-align:center;color:#5a6a7e;padding:2rem;">Age group breakdown not available in this dataset.</p>';
+    return;
+  }
+  Plotly.newPlot("chart-age", [{
+    type: "bar",
+    x: data.map(d => d.age_group),
+    y: data.map(d => d.improved_pct),
+    marker: { color: data.map(d => d.improved_pct >= 90 ? "#24a148" : d.improved_pct >= 70 ? "#0062fe" : "#da1e28") },
+    text: data.map(d => d.improved_pct + "%"),
+    textposition: "outside",
+    hovertemplate: "<b>%{x}</b><br>%{y}%<extra></extra>",
+  }], {
+    margin: { t: 10, l: 50, r: 20, b: 80 },
+    yaxis: { title: "% with Improved Access", range: [0, 112] },
+    xaxis: { title: "Age Group", tickangle: -30 },
+    plot_bgcolor: "transparent", paper_bgcolor: "transparent",
+    font: { family: "Segoe UI, sans-serif", size: 11 },
+  }, { responsive: true, displayModeBar: false });
+}
+
+/* ── Gender Chart ────────────────────────────────────────────────── */
+async function loadGenderChart() {
+  const { data } = await api("/api/gender-analysis");
+  if (!data || data.length === 0) {
+    document.getElementById("chart-gender").innerHTML =
+      '<p style="text-align:center;color:#5a6a7e;padding:2rem;">Gender breakdown not available in this dataset.</p>';
+    return;
+  }
+  const colors = ["#0062fe", "#00b4d8", "#6929c4", "#24a148"];
+  Plotly.newPlot("chart-gender", [{
+    type: "bar",
+    x: data.map(d => d.gender),
+    y: data.map(d => d.improved_pct),
+    marker: { color: data.map((_, i) => colors[i % colors.length]) },
+    text: data.map(d => d.improved_pct + "%"),
+    textposition: "outside",
+    hovertemplate: "<b>%{x}</b><br>%{y}%<extra></extra>",
+  }], {
+    margin: { t: 10, l: 50, r: 20, b: 60 },
+    yaxis: { title: "% with Improved Access", range: [0, 112] },
+    xaxis: { title: "Gender" },
+    plot_bgcolor: "transparent", paper_bgcolor: "transparent",
+    font: { family: "Segoe UI, sans-serif", size: 12 },
+  }, { responsive: true, displayModeBar: false });
+}
+
+/* ── National Insight (IBM Granite) ─────────────────────────────── */
+async function loadNationalInsight() {
+  const body   = document.getElementById("insight-body");
+  const btn    = document.querySelector("#insight-card .btn-primary");
+  body.innerHTML = '<span style="opacity:.6;font-style:italic;">Requesting insight from IBM Granite via watsonx.ai…</span>';
+  if (btn) btn.disabled = true;
+
+  try {
+    const { insight } = await api("/api/watsonx/national-insight");
+    body.innerHTML = `<p style="line-height:1.75;">${insight.replace(/\n/g, "<br>")}</p>
+      <div style="font-size:.75rem;color:#5a6a7e;margin-top:.75rem;">
+        IBM watsonx.ai &middot; granite-4-h-small &middot; Grounded in MIS 78th Round data
+      </div>`;
+  } catch (err) {
+    body.innerHTML = `<span style="color:#da1e28;">Could not load insight: ${err.message}. Ensure WATSONX_API_KEY is configured.</span>`;
+  } finally {
+    if (btn) btn.disabled = false;
+  }
 }
 
 /* ── Predictor ───────────────────────────────────────────────────── */

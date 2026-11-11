@@ -18,8 +18,11 @@
   </div>
   <ul class="nav-links">
     <li><a href="#kpis">Overview</a></li>
+    <li><a href="#insight">AI Insight</a></li>
     <li><a href="#charts">Analytics</a></li>
     <li><a href="#gaps">Disparities</a></li>
+    <li><a href="#demographics">Demographics</a></li>
+    <li><a href="#ibm-services">IBM Services</a></li>
     <li><a href="#predict">Predictor</a></li>
     <li><a href="#sdg">SDG 6</a></li>
     <li><a href="#chatbot">Ask AI</a></li>
@@ -38,10 +41,11 @@
     <div class="hero-tags">
       <span class="tag">Problem Statement #38</span>
       <span class="tag">AI Kosh · nss78_21</span>
+      <span class="tag">IBM watsonx.ai · Granite 4H</span>
       <span class="tag">IBM Watson ML</span>
       <span class="tag">IBM Db2</span>
       <span class="tag">IBM COS</span>
-      <span class="tag">222 Data Points</span>
+      <span class="tag">222 Data Points · 36 States/UTs</span>
     </div>
     <button class="btn-primary" onclick="loadAll()">Load Dashboard</button>
   </div>
@@ -79,10 +83,27 @@
   </div>
 </section>
 
+<!-- NATIONAL AI INSIGHT -->
+<section id="insight" class="section section-alt">
+  <h2 class="section-title">IBM Granite AI Insight</h2>
+  <p class="section-sub">Powered by IBM watsonx.ai — Granite 4 H Small. Real-time national policy analysis from MIS 78th Round data.</p>
+  <div class="insight-card" id="insight-card">
+    <div class="insight-header">
+      <span class="insight-icon">🤖</span>
+      <strong>National Water Access Policy Insight</strong>
+      <span class="ibm-badge" style="margin-left:auto;">IBM watsonx.ai · Granite 4H</span>
+    </div>
+    <div class="insight-body" id="insight-body">
+      <span class="insight-placeholder">Click "Generate Insight" to request an AI-generated policy analysis from IBM Granite.</span>
+    </div>
+    <button class="btn-primary" onclick="loadNationalInsight()" style="margin-top:1rem;">Generate Insight</button>
+  </div>
+</section>
+
 <!-- CHARTS -->
-<section id="charts" class="section section-alt">
+<section id="charts" class="section">
   <h2 class="section-title">State-wise Analytics</h2>
-  <p class="section-sub">Improved Drinking Water Access — All 37 States &amp; UTs (MIS 78th Round)</p>
+  <p class="section-sub">Improved Drinking Water Access — All States &amp; UTs (MIS 78th Round)</p>
   <div class="chart-grid">
     <div class="chart-card wide">
       <h3>Improved Source of Drinking Water by State — All Sectors (%)</h3>
@@ -115,6 +136,54 @@
     <div class="chart-card">
       <h3>Top 10 States — Highest Improved Access</h3>
       <div id="chart-top" class="chart-box"></div>
+    </div>
+  </div>
+</section>
+
+<!-- AGE GROUP & GENDER -->
+<section id="demographics" class="section section-alt">
+  <h2 class="section-title">Demographic Breakdown</h2>
+  <p class="section-sub">Improved water access by age group and gender — All India (MIS 78th Round)</p>
+  <div class="chart-grid">
+    <div class="chart-card">
+      <h3>Access by Age Group — All India</h3>
+      <div id="chart-age" class="chart-box"></div>
+    </div>
+    <div class="chart-card">
+      <h3>Access by Gender — All India</h3>
+      <div id="chart-gender" class="chart-box"></div>
+    </div>
+  </div>
+</section>
+
+<!-- IBM SERVICES -->
+<section id="ibm-services" class="section">
+  <h2 class="section-title">IBM Cloud Lite Services</h2>
+  <p class="section-sub">JalDrishti-AI integrates four IBM Cloud Lite services as required by the problem statement</p>
+  <div class="ibm-grid">
+    <div class="ibm-card">
+      <div class="ibm-icon">🤖</div>
+      <div class="ibm-name">IBM watsonx.ai</div>
+      <div class="ibm-desc">Granite 4 H Small LLM powers the AI chatbot and generates state/national policy insights via the REST API.</div>
+      <div class="ibm-endpoints"><code>GET /api/watsonx/national-insight</code><br><code>POST /api/watsonx/state-insight</code><br><code>POST /api/watsonx/chat</code></div>
+    </div>
+    <div class="ibm-card">
+      <div class="ibm-icon">⚙️</div>
+      <div class="ibm-name">IBM Watson ML</div>
+      <div class="ibm-desc">GradientBoostingRegressor is trained locally and deployed to Watson ML for remote scoring predictions.</div>
+      <div class="ibm-endpoints"><code>POST /api/watson-predict</code></div>
+    </div>
+    <div class="ibm-card">
+      <div class="ibm-icon">🗄️</div>
+      <div class="ibm-name">IBM Cloud Object Storage</div>
+      <div class="ibm-desc">The nss78_21.xlsx dataset is uploaded to an IBM COS Lite bucket for persistent cloud storage and retrieval.</div>
+      <div class="ibm-endpoints"><code>POST /api/cos/upload</code></div>
+    </div>
+    <div class="ibm-card">
+      <div class="ibm-icon">🗃️</div>
+      <div class="ibm-name">IBM Db2 on Cloud</div>
+      <div class="ibm-desc">MIS 78th Round records are stored in an IBM Db2 Lite instance for relational queries and reporting.</div>
+      <div class="ibm-endpoints"><code>services/db2_service.py</code></div>
     </div>
   </div>
 </section>
@@ -233,9 +302,10 @@
   <div>
     <strong>JalDrishti-AI</strong> · Problem Statement #38 · MIS 78th Round (nss78_21) ·
     AI&nbsp;Kosh Dataset ·
-    <a href="https://sdgs.un.org/goals/goal6" target="_blank">SDG 6</a>
+    <a href="https://sdgs.un.org/goals/goal6" target="_blank" rel="noopener">SDG 6</a> ·
+    <a href="https://github.com/varshiniparipelli/JalDrishti-AI" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <div class="footer-ibm">Built with IBM Cloud Lite Services — watsonx.ai (Granite 4 H Small) · Watson ML · Cloud Object Storage · Db2</div>
+  <div class="footer-ibm">Built with IBM Cloud Lite Services — watsonx.ai (Granite 4 H Small) · Watson ML · Cloud Object Storage · Db2 on Cloud · Watson Assistant</div>
 </footer>
 
 <script src="/static/js/dashboard.js"></script>
