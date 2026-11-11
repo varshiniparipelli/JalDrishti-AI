@@ -84,7 +84,7 @@
   <tr><td>Lowest access — Kerala</td><td>55.2%</td></tr>
   <tr><td>Highest access — Delhi, Chandigarh</td><td>100%</td></tr>
   <tr><td>SDG 6.1 Projected 2030 coverage</td><td>100% — On Track</td></tr>
-  <tr><td>AI Model LOO MAE</td><td>3.98 percentage points</td></tr>
+  <tr><td>AI Model 5-Fold CV MAE</td><td>4.97 pp &nbsp;|&nbsp; Train MAE: 3.46 pp</td></tr>
 </table>
 
 <h2>5. Solution — JalDrishti-AI</h2>
@@ -93,7 +93,7 @@
 <h3>IBM Cloud Services Used</h3>
 <ul>
   <li><b>IBM watsonx.ai</b> — Model: ibm/granite-4-h-small · Project ID: d35a6f68-c129-4634-b823-ff9583f7fde6 · Generates national &amp; state-level policy insights and powers the live AI chat</li>
-  <li><b>IBM Watson Machine Learning (Lite)</b> — GradientBoosting Regressor · LOO MAE: 3.98 pp · Predicts improved water access % per state &amp; sector</li>
+  <li><b>IBM Watson Machine Learning (Lite)</b> — GradientBoosting Regressor · 5-Fold CV MAE: 4.97 pp · Train MAE: 3.46 pp · Predicts improved water access % per state &amp; sector</li>
   <li><b>IBM Cloud Object Storage (Lite)</b> — Stores nss78_21.xlsx in jaldrishti-data-bucket · ibm_boto3 SDK</li>
   <li><b>IBM Db2 on Cloud (Lite)</b> — Table: MIS_DRINKING_WATER · SQL analytics · SSL port 50001</li>
   <li><b>IBM Watson Assistant (Lite)</b> — Chatbot fallback · 10,000 messages/month · v2 session API</li>
@@ -105,6 +105,7 @@
   <li>Analysis: pandas, scikit-learn, joblib</li>
   <li>Frontend: HTML5 + CSS3 + Plotly.js (7 interactive charts)</li>
   <li>GitHub: https://github.com/varshiniparipelli/JalDrishti-AI</li>
+  <li>Live Demo: https://jaldrishti-ai-4.onrender.com</li>
 </ul>
 
 <h2>6. SDG Alignment</h2>
