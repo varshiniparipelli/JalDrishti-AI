@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: jaldrishti-ai-flask
+    name: jaldrishti-ai-4
     runtime: python
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app --workers 1 --timeout 120

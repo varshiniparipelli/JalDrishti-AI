@@ -2,7 +2,8 @@
   "name": "JalDrishti-AI",
   "description": "AI-powered Improved Drinking Water Access Analytics — MIS 78th Round (Problem Statement #38)",
   "repository": "https://github.com/varshiniparipelli/JalDrishti-AI",
-  "logo": "https://raw.githubusercontent.com/YOUR_USERNAME/JalDrishti-AI/main/static/css/style.css",
+  "logo": "https://raw.githubusercontent.com/varshiniparipelli/JalDrishti-AI/main/static/css/style.css",
+  "live_url": "https://jaldrishti-ai-4.onrender.com",
   "keywords": [
     "ibm-watsonx",
     "ibm-granite",
